@@ -1,0 +1,235 @@
+/* =============================================================================
+   Классический сканируемый резюме-лист. Компактно, для «пробежки глазами».
+   Меняй переменные ниже - поменяется вид. Контент живёт в content.js.
+   ============================================================================= */
+:root{
+  --accent:#C0392B;                 /* перебивается из content.js (settings.accent) */
+  --paper:#ECEEF1;                  /* фон вокруг листа */
+  --sheet:#ffffff;                  /* сам лист */
+  --ink:#1f2328;                    /* основной текст */
+  --muted:#565c64;                  /* вторичный */
+  --faint:#878d96;                  /* подписи, даты */
+  --line:#e4e7eb;                   /* тонкие линии */
+  --line-strong:#d2d7dd;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  --maxw:980px;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:14px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+::selection{background:var(--accent);color:#fff}
+
+/* ---------- ЛИСТ ---------- */
+.sheet{
+  max-width:var(--maxw);margin:26px auto;background:var(--sheet);
+  border:1px solid var(--line);border-radius:10px;
+  box-shadow:0 8px 34px -18px rgba(20,23,28,.30);
+  padding:clamp(22px,3.6vw,44px);
+}
+
+/* ---------- ШАПКА ---------- */
+.head{display:flex;justify-content:space-between;gap:26px;align-items:flex-start}
+.head__left{min-width:0;display:flex;align-items:center;gap:18px}
+.head__id{min-width:0;display:block;color:inherit;text-decoration:none;transition:opacity .15s ease}
+.head__id:hover{opacity:.82}
+.head__id:hover .name{text-decoration:underline}
+.avatar{flex:none;width:108px;height:108px;border-radius:50%;overflow:hidden;padding:0;cursor:pointer;background:#eef0f2;
+  border:0;box-shadow:0 0 0 1px var(--line-strong),0 6px 16px -8px rgba(20,23,28,.45);transition:transform .15s,box-shadow .15s}
+.avatar img{width:100%;height:100%;object-fit:cover;object-position:50% 14%;display:block}
+.avatar:hover{transform:translateY(-1px);box-shadow:0 0 0 1px var(--accent),0 8px 20px -8px rgba(20,23,28,.5)}
+.name{font-size:clamp(25px,4vw,32px);font-weight:700;letter-spacing:-.015em;line-height:1.08;margin:0 0 3px}
+.title{font-size:15.5px;font-weight:600;color:var(--accent);margin-bottom:8px}
+.tagline{font-size:13.3px;color:var(--muted);max-width:56ch;margin:0;line-height:1.5}
+.head__right{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:11px}
+
+.lang{display:inline-flex;border:1px solid var(--line-strong);border-radius:6px;overflow:hidden;font-size:11.5px;font-weight:600}
+.lang button{appearance:none;border:0;background:#fff;color:var(--faint);padding:4px 11px;cursor:pointer;letter-spacing:.05em;transition:background .15s,color .15s}
+.lang button.active{background:var(--ink);color:#fff}
+
+.contacts{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:12.6px;text-align:right}
+.contacts a{display:inline-flex;gap:7px;align-items:center;justify-content:flex-end}
+.c-ico{display:inline-flex;align-items:center;color:var(--faint);flex:none}
+.c-ico--telegram{color:#229ED9}
+.c-ico--linkedin{color:#0A66C2}
+.c-ico--portfolio{color:var(--accent)}
+.contacts .k{color:var(--faint);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;min-width:50px;text-align:right}
+.contacts .v{color:var(--ink)}
+.contacts a:hover .v{color:var(--accent);text-decoration:underline}
+
+.rule{border:0;border-top:1px solid var(--line);margin:17px 0 19px}
+
+/* ---------- СЕТКА (сайдбар + основная) ---------- */
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.05fr);gap:clamp(22px,3.4vw,38px)}
+
+/* ---------- БЛОКИ / ЗАГОЛОВКИ СЕКЦИЙ ---------- */
+.block{margin-bottom:19px}
+.block:last-child{margin-bottom:0}
+.block__title{
+  font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.11em;color:var(--ink);
+  margin:0 0 11px;padding-bottom:5px;border-bottom:1.5px solid var(--ink);
+}
+.side .block__title{border-bottom-color:var(--line-strong)}
+.side .entry + .entry{border-top:none;padding-top:10px;margin-top:4px}
+
+/* ---------- ЗАПИСЬ (опыт/проект) ---------- */
+.entry{margin-bottom:15px}
+.entry:last-child{margin-bottom:0}
+.entry + .entry{margin-top:19px;padding-top:19px;border-top:2px solid color-mix(in srgb,var(--line-strong) 80%,transparent)}
+.entry__row{display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+.entry__role{font-size:16.7px;font-weight:600;margin:0;line-height:1.25}
+.proj__accordion{border:none;margin:0;padding:0}
+.proj__summary-row{list-style:none;display:flex;align-items:center;gap:6px;cursor:pointer;user-select:none}
+.proj__summary-row::-webkit-details-marker{display:none}
+.proj__summary-row::before{content:"›";font-size:15px;line-height:1;color:rgb(59,91,219);transition:transform .18s ease;flex-shrink:0}
+.proj__accordion[open]>.proj__summary-row::before{transform:rotate(90deg)}
+.proj__title{font-size:14px;font-weight:600;margin:0;line-height:1.3}
+.proj__url{display:block;font-size:11.5px;color:rgb(59,91,219);margin:4px 0 0;word-break:break-all;text-decoration:underline}
+.proj__url:hover{opacity:.7}
+.entry__dates{flex:none;font-size:11.8px;color:rgb(59,91,219);white-space:nowrap;font-variant-numeric:tabular-nums}
+.entry__org{font-size:12.5px;color:var(--muted);margin-top:1px}
+.entry__org--link{color:rgb(59,91,219);text-decoration:none;cursor:pointer;transition:color .15s}
+.entry__org--link span{border-bottom:1px solid currentColor;transition:border-color .15s}
+.entry__org--link:hover{color:rgb(59,91,219)}
+.entry__org--link:hover span{border-bottom-color:currentColor}
+.entry__summary{font-size:13.5px;color:var(--ink);margin:6px 0 0;line-height:1.5}
+.rt-accent{color:rgb(59,91,219);font-weight:500}
+.rt-link{color:rgb(59,91,219);text-decoration:none;border-bottom:1px solid currentColor;transition:opacity .15s}
+.rt-link:hover{opacity:.7}
+.entry__bullets{list-style:none;margin:7px 0 0;padding:0;display:grid;gap:3px}
+.entry__bullets li{position:relative;padding-left:15px;font-size:13.2px;color:var(--ink);line-height:1.46}
+.entry__bullets li::before{content:"";position:absolute;left:2px;top:8px;width:4px;height:4px;border-radius:50%;background:var(--accent)}
+.entry__accordion{border:none;margin:10px 0 0;padding:0}
+.entry__accordion>summary{list-style:none;display:flex;align-items:center;gap:6px;cursor:pointer;user-select:none}
+.entry__accordion>summary::-webkit-details-marker{display:none}
+.entry__accordion>summary::before{content:"›";font-size:15px;line-height:1;color:rgb(59,91,219);transition:transform .18s ease;flex-shrink:0}
+.entry__accordion[open]>summary::before{transform:rotate(90deg)}
+.entry__accordion>summary:hover::before{color:rgb(59,91,219)}
+.entry__subhead{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:rgb(59,91,219);margin:0}
+
+/* --- подсветка ключевых пунктов: акцентный рельс + карточка --- */
+.entry__bullets li.kb{isolation:isolate;font-weight:500;transition:transform .25s ease}
+.entry__bullets li.kb::after{
+  content:"";position:absolute;z-index:-1;left:-3px;right:-8px;top:-3px;bottom:-3px;border-radius:6px;
+  background:color-mix(in srgb,var(--accent) 9%,transparent);border-left:2.5px solid var(--accent);
+  opacity:0;transform:scaleY(.4);transform-origin:left center;
+  transition:opacity .4s ease,transform .5s cubic-bezier(.22,1,.36,1),background-color .25s ease;
+}
+.entry__bullets li.kb.is-on::after{opacity:1;transform:scaleY(1)}
+.entry__bullets li.kb:hover{transform:translateX(3px)}
+.entry__bullets li.kb:hover::after{background:color-mix(in srgb,var(--accent) 16%,transparent)}
+
+@media (prefers-reduced-motion:reduce){
+  .entry__bullets li.kb::after{transition:none!important;transform:none!important;opacity:1!important}
+}
+
+/* ---------- ТЕГИ ---------- */
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.tag{font-size:11.2px;color:var(--muted);background:#f4f5f7;border:1px solid var(--line);border-radius:4px;padding:2px 7px;line-height:1.55;white-space:nowrap}
+/* навыки в сайдбаре - голубым подсвечиваются помеченные (tag--hl / "*" в content.js) */
+.side .tag{--blue:59,91,219;font-size:11.6px;padding:3px 9px;font-weight:500;cursor:default;
+  color:var(--ink);background:#fff;border-color:var(--line-strong);
+  transition:transform .14s ease,border-color .14s ease,background .14s ease,color .14s ease,box-shadow .14s ease}
+.side .tag--hl{color:rgb(var(--blue));background:rgba(var(--blue),.08);border-color:rgba(var(--blue),.30)}
+.side .tag:hover{border-color:rgb(var(--blue));color:rgb(var(--blue));background:rgba(var(--blue),.14);
+  transform:translateY(-1px) scale(1.09);box-shadow:0 4px 10px -5px rgba(var(--blue),.55)}
+
+/* ---------- МИНИАТЮРЫ МЕДИА ---------- */
+.thumbs{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
+.thumb{position:relative;width:120px;height:120px;border-radius:5px;overflow:hidden;border:1px solid var(--line-strong);
+  cursor:pointer;background:#eef0f2;padding:0;transition:border-color .15s,transform .15s}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb:hover{border-color:var(--accent);transform:translateY(-2px) scale(1.06);z-index:1}
+.thumb__v{position:absolute;inset:0;background:rgba(31,35,40,.40)}
+.thumb__play{position:absolute;inset:0;margin:auto;width:0;height:0;
+  border-left:24px solid #fff;border-top:16px solid transparent;border-bottom:16px solid transparent;
+  filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+.thumb__doc{position:absolute;inset:0;margin:auto;width:max-content;height:max-content;
+  padding:4px 9px;border-radius:5px;background:var(--accent);color:#fff;
+  font-size:13px;font-weight:700;letter-spacing:.5px;
+  box-shadow:0 2px 6px rgba(0,0,0,.45)}
+
+/* ---------- ТАЧ: эффекты наведения по касанию (нет hover на тач-экранах) ----------
+   iOS Safari не запускает :hover на тач, поэтому светящиеся блоки реагируют на :active
+   (пока палец прижат). Глобальный touchstart-слушатель в app.js включает :active на iOS. */
+@media (hover:none){
+  .side .tag:active{border-color:rgb(var(--blue));color:rgb(var(--blue));background:rgba(var(--blue),.14);
+    transform:translateY(-1px) scale(1.09);box-shadow:0 4px 10px -5px rgba(var(--blue),.55)}
+  .thumb:active{border-color:var(--accent);transform:translateY(-2px) scale(1.06);z-index:1}
+  .avatar:active{transform:translateY(-1px);box-shadow:0 0 0 1px var(--accent),0 8px 20px -8px rgba(20,23,28,.5)}
+  .entry__bullets li.kb:active{transform:translateX(3px)}
+  .entry__bullets li.kb:active::after{background:color-mix(in srgb,var(--accent) 16%,transparent)}
+}
+
+/* ---------- САЙДБАР ---------- */
+.skillgroup{margin-bottom:11px}
+.skillgroup:last-child{margin-bottom:0}
+.skillgroup__name{font-size:11.3px;font-weight:600;color:rgb(59,91,219);margin-bottom:5px}
+.edu{margin-bottom:11px;display:flex;align-items:center;gap:10px}
+.edu:last-child{margin-bottom:0}
+.edu__logo{flex:none;width:76px;height:auto}
+.edu__body{min-width:0}
+.edu__deg{font-size:12.8px;font-weight:600;line-height:1.35}
+.edu__org{font-size:12.2px;color:var(--muted);margin-top:1px}
+.minor{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.minor li{font-size:12.3px;color:var(--muted);padding-left:12px;position:relative;line-height:1.4}
+.minor li::before{content:"-";position:absolute;left:0;color:var(--faint)}
+.lang-line{display:flex;justify-content:space-between;gap:10px;font-size:12.6px;padding:4px 0;border-bottom:1px dashed var(--line)}
+.lang-line:last-child{border-bottom:0}
+.lang-line .lv{color:var(--muted)}
+
+/* ---------- ПРОФИЛЬ ---------- */
+.profile{font-size:13.4px;color:var(--ink);margin:0;line-height:1.55}
+
+/* ---------- ЛАЙТБОКС ---------- */
+.lightbox{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:clamp(16px,4vw,56px);
+  background:rgba(20,17,14,.93);backdrop-filter:blur(5px)}
+.lightbox[hidden]{display:none}
+.lightbox__stage{max-width:1080px;width:100%;display:grid;place-items:center}
+.lightbox__stage img,.lightbox__stage video{max-width:100%;max-height:80vh;border-radius:8px;box-shadow:0 30px 80px -20px rgba(0,0,0,.7)}
+.lightbox__stage iframe{width:min(960px,92vw);aspect-ratio:16/9;border:0;border-radius:8px;background:#000;box-shadow:0 30px 80px -20px rgba(0,0,0,.7)}
+.lightbox__stage iframe.lb-pdf{aspect-ratio:auto;height:88vh;background:#525659}
+.lightbox__caption{color:#f1ede7;font-size:13px;margin-top:16px;text-align:center;max-width:70ch}
+.lightbox__close{position:absolute;top:16px;right:20px;width:44px;height:44px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;font-size:24px;line-height:1;cursor:pointer;transition:.15s;z-index:2}
+.lightbox__close:hover{background:#fff;color:#1f2328}
+
+/* ---------- АДАПТИВ ---------- */
+@media (max-width:760px){
+  body{font-size:14px}
+  .sheet{margin:0;border-radius:0;border-left:0;border-right:0;box-shadow:none}
+  .head{flex-direction:column;align-items:flex-start;gap:13px}
+  .avatar{width:80px;height:80px}
+  .head__right{align-items:flex-start;width:100%}
+  .contacts{text-align:left}
+  .contacts a{justify-content:flex-start}
+  .contacts .k{text-align:left;min-width:46px}
+  .entry__row{flex-direction:column;align-items:flex-start;gap:1px}
+  .grid{grid-template-columns:1fr;gap:6px}
+  .side{order:2}
+  .body{order:1}
+}
+
+/* ---------- ПЕЧАТЬ / СОХРАНЕНИЕ В PDF (Cmd+P) ---------- */
+@media print{
+  :root{--paper:#fff}
+  body{background:#fff}
+  .sheet{margin:0;max-width:none;border:0;border-radius:0;box-shadow:none;padding:0}
+  .lang{display:none!important}
+  .thumbs{display:none}                 /* для чистого традиционного PDF медиа скрываем */
+  .entry,.block,.edu{break-inside:avoid}
+  a{color:var(--ink)}
+  .contacts a:hover .v{text-decoration:none}
+}
+
+/* company logo in experience entries */
+.entry__header{display:flex;align-items:center;gap:8px;margin-bottom:2px}
+.entry__header-text{flex:1;min-width:0}
+.entry__logo-wrap{width:72px;flex:none;display:flex;align-items:center;justify-content:flex-start}
+.entry__logo{max-width:72px;max-height:72px;width:auto;height:auto;object-fit:contain;border-radius:4px;display:block}

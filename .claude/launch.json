@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "web-cv",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["/Users/dm/Documents/Claude Projects/Web-CV/serve.py"],
+      "port": 8124
+    }
+  ]
+}
