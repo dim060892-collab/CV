@@ -59,7 +59,7 @@ window.RESUME = {
       location:{ ru: "Москва", en: "Moscow" },
       period:  { ru: "Апрель 2025 — Июль 2026 · 1 г 4 мес", en: "Apr 2025 — Jul 2026 · 1 yr 4 mo" },
       summary: {
-        ru: "Руководство продуктовым, конструкторским и саппорт-направлениями разработки Роботизированного Массажного Комплекса (бренды [Роден](https://beautylinergroup.ru/roden/)/ [RoboSculptor](https://www.robo-sculptor.com/)).\nРоботизированный Массажный Комплекс «Роден» (HealthTech / MedTech, B2B/B2C) — аппаратно-программный комплекс (Hardware + Software + Robotics + AI/CV): облачное ПО, внутреннее ПО для разработки, 2 Android-приложения.\nСтек: Python, C++, C#, JavaScript, CUDA, Unity.",
+        ru: "Руководство продуктовым, конструкторским и саппорт-направлениями разработки Роботизированного Массажного Комплекса (бренды [Роден](https://beautylinergroup.ru/roden/)/ [RoboSculptor](https://www.robo-sculptor.com/)).\nАппаратно-программный комплекс (Hardware + Software + Robotics + AI/CV): облачное ПО, внутреннее ПО для разработки, 2 Android-приложения.\nСтек: Python, C++, C#, JavaScript, CUDA, Unity.",
         en: "Leading product, engineering and support tracks for a robotic massage complex (HealthTech). Dev team — 30 people, markets: Russia, UAE, Italy, USA.",
       },
       highlights: [
